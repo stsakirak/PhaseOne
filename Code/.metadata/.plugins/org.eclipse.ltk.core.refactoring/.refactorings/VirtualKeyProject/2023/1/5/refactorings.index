@@ -1,0 +1,12 @@
+1675069756558	Rename resource 'abab.txt'
+1675070637474	Extract method 'sortFileNameList'
+1675071125718	Rename local variable 'filePath'
+1675072108983	Delete element
+1675072938862	Delete element
+1675076236757	Rename method 'addNewFileName'
+1675080608497	Extract method 'mainMenuOptionSelection'
+1675081092566	Rename method 'mainMenuOptionSelection'
+1675081154194	Extract method 'optionMenuSelection'
+1675090081389	Rename field 'mainMenu'
+1675090100604	Rename field 'optionMenu'
+1675114729855	Delete element

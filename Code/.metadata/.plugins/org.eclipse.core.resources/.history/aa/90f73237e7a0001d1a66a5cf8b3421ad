@@ -1,0 +1,114 @@
+package com;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class MainClass {
+	
+	static final String APPLICATION_NAME_TEXT = "Welcome to Virtual Key!";
+	static final String DEVELOPER_NAME_TEXT = "Developer: Thomas Georgakis";
+	static final String MAIN_MENU_TEXT = "Main menu";
+	static final String OPTION_MENU_TEXT = "Option menu.";
+	static final ArrayList<String> MAIN_MENU_LIST = CREATE_MAIN_MENU_LIST();
+	static final ArrayList<String> OPTION_MENU_LIST = CREATE_OPTION_MENU_LIST();
+
+	private static File fileDirectory = new File("/home/thomasgeorgakis/Desktop/Java FSD Fullstack/Phase 1/Code/VirtualKeyProject/src/");
+
+	public static void main(String[] args) throws IOException{
+		WelcomeScreen screen = new WelcomeScreen();
+		System.out.println(APPLICATION_NAME_TEXT);
+		System.out.println(DEVELOPER_NAME_TEXT);
+		System.out.println("\n");
+		
+		mainMenuSelection(screen);
+		
+	}
+	
+	private static void mainMenuSelection(WelcomeScreen screen) throws IOException {
+		String mainMenuInput;
+		int mainMenuInputInteger;
+		try {
+			do {
+				System.out.println(MAIN_MENU_TEXT);
+				System.out.println("Please choose a number between 1-3");
+				for (String s : MAIN_MENU_LIST) {
+					System.out.println(s);
+				}
+				
+				Scanner sc = new Scanner(System.in);
+				mainMenuInput = sc.next();
+				mainMenuInputInteger = Integer.parseInt(mainMenuInput);
+				
+				if (mainMenuInputInteger == 1) {
+					screen.sortFileNameList(fileDirectory);
+					mainMenuSelection(screen);
+				} else if (mainMenuInputInteger == 2) {
+					optionMenuSelection(screen);
+				} else if (mainMenuInputInteger == 3) {
+					System.out.println("Exit");
+				} else {
+					System.out.println("Please give a number between 1-3");
+				}
+			} while ((Integer.parseInt(mainMenuInput) < 1) || (Integer.parseInt(mainMenuInput) > 3));
+		} catch (NumberFormatException nfe) {
+			System.out.println("Wrong argument.");
+			mainMenuSelection(screen);
+		}	
+	}
+
+	private static void optionMenuSelection(WelcomeScreen screen) throws IOException {
+		String optionMenuInput;
+		int optionMenuInputInteger;
+		try {		
+			do {
+				System.out.println(OPTION_MENU_TEXT);
+				System.out.println("Please choose a number between 1-4");
+				for(String s : OPTION_MENU_LIST) {
+					System.out.println(s);
+				}
+				Scanner sc = new Scanner(System.in);
+				optionMenuInput = sc.next();
+				optionMenuInputInteger = Integer.parseInt(optionMenuInput);
+				
+				if (optionMenuInput.equals("1")) {
+					screen.addNewFile(fileDirectory);
+					optionMenuSelection(screen);
+				} else if (optionMenuInput.equals("2")) {
+					screen.deleteFile(fileDirectory);
+					optionMenuSelection(screen);
+				} else if (optionMenuInput.equals("3")) {
+					screen.searchFile(fileDirectory);
+					optionMenuSelection(screen);
+				} else if (optionMenuInput.equals("4")) {
+					mainMenuSelection(screen);
+				} else {
+					System.out.println("Please give a number between 1-4");
+				}
+			} while ((optionMenuInputInteger < 1) || (optionMenuInputInteger > 4));
+		} catch (NumberFormatException nfe) {
+			System.out.println("Wrong argument.");
+			optionMenuSelection(screen);
+		}	
+	}
+	
+	private static final ArrayList<String> CREATE_MAIN_MENU_LIST() {
+		ArrayList<String> mainMenu = new ArrayList<>();
+		mainMenu.add("1. Show Files in ascending order");
+		mainMenu.add("2. Show File Options Menu");
+		mainMenu.add("3. Exit");
+		
+		return(mainMenu);
+	}
+	
+	private static final ArrayList<String> CREATE_OPTION_MENU_LIST() {
+		ArrayList<String> optionMenu = new ArrayList<>();
+		optionMenu.add("1. Add a new file");
+		optionMenu.add("2. Delete a file");
+		optionMenu.add("3. Search file");
+		optionMenu.add("4. Back to Main menu");
+		
+		return(optionMenu);
+	}
+}

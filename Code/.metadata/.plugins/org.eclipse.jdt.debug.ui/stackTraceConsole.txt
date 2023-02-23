@@ -1,0 +1,13 @@
+String mainMenuInput;
+		do {
+			Scanner sc = new Scanner(System.in);
+			mainMenuInput = sc.next();
+			
+			switch (mainMenuInput) {
+				case "1": sortFileNameList(fileDirectory); break;
+				case "2": displayOptionMenu();addNewFileName(fileDirectory); break;
+				case "3": System.out.println("felakia!"); break;
+				default: System.out.println("Please give a number between 1-3"); break;
+			}
+
+		} while ((Integer.parseInt(mainMenuInput) < 1) || (Integer.parseInt(mainMenuInput) > 3));

@@ -1,0 +1,161 @@
+package com;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Scanner;
+
+public class WelcomeScreen {
+	
+	private static final String APPLICATION_NAME_TEXT = "Welcome to Virtual Key!";
+	private static final String DEVELOPER_NAME_TEXT = "Developer: Thomas Georgakis";
+	private static final String MAIN_MENU_TEXT = "Main menu";
+	private static final String OPTION_MENU_TEXT = "Option menu.";
+	private static final ArrayList<String> MAIN_MENU_LIST = CREATE_MAIN_MENU_LIST();
+	private static final ArrayList<String> OPTION_MENU_LIST = CREATE_OPTION_MENU_LIST();
+	private File fileDirectory = new File("/home/thomasgeorgakis/Desktop/Java FSD Fullstack/Phase 1/Code/VirtualKeyProject/src/");
+	
+	
+	void displayWS () throws IOException {
+
+		
+		System.out.println(APPLICATION_NAME_TEXT);
+		System.out.println(DEVELOPER_NAME_TEXT);
+		System.out.println("\n");
+		
+		mainMenuSelection();
+	}
+
+	private void mainMenuSelection() throws IOException {
+		String mainMenuInput;
+		do {
+			System.out.println(MAIN_MENU_TEXT);
+			System.out.println("Please choose a number between 1-3");
+			for (String s : MAIN_MENU_LIST) {
+				System.out.println(s);
+			}
+			
+			Scanner sc = new Scanner(System.in);
+			mainMenuInput = sc.next();
+			
+			if (mainMenuInput.equals("1")) {
+				sortFileNameList(fileDirectory);
+				mainMenuSelection();
+			} else if (mainMenuInput.equals("2")) {
+				optionMenuSelection();
+			} else if (mainMenuInput.equals("3")) {
+				System.out.println("Exit");
+			} else {
+				System.out.println("Please give a number between 1-3");
+			}
+
+		} while ((Integer.parseInt(mainMenuInput) < 1) || (Integer.parseInt(mainMenuInput) > 3));
+	}
+
+	private void optionMenuSelection() throws IOException {
+		String optionMenuInput;
+		do {
+			System.out.println(OPTION_MENU_TEXT);
+			System.out.println("Please choose a number between 1-4");
+			for(String s : OPTION_MENU_LIST) {
+				System.out.println(s);
+			}
+			Scanner sc = new Scanner(System.in);
+			optionMenuInput = sc.next();
+			
+			if (optionMenuInput.equals("1")) {
+				addNewFile(fileDirectory);
+				optionMenuSelection();
+			} else if (optionMenuInput.equals("2")) {
+				deleteFile(fileDirectory);
+				optionMenuSelection();
+			} else if (optionMenuInput.equals("3")) {
+				searchFile(fileDirectory);
+				optionMenuSelection();
+			} else if (optionMenuInput.equals("4")) {
+				mainMenuSelection();
+			} else {
+				System.out.println("Please give a number between 1-4");
+			}
+		} while ((Integer.parseInt(optionMenuInput) < 1) || (Integer.parseInt(optionMenuInput) > 4));
+	}
+
+	private void sortFileNameList(File fileDirectory) {
+		
+		String fileNames[]=fileDirectory.list();
+		for (int i = 0;i<fileNames.length - 1;i++) {
+			for(int j=i+1;j<fileNames.length;j++) {
+				if (fileNames[i].compareTo(fileNames[j]) > 0) {
+					String temp = fileNames[i];
+					fileNames[i] = fileNames[j];
+					fileNames[j] = temp;
+				}
+			}
+		}
+		System.out.println(Arrays.toString(fileNames));
+	}
+	
+	private void addNewFile(File fileDirectory) throws IOException {
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Please enter the file name you want to create:");
+		String fileName = sc.next();
+		String filePath = fileDirectory + "/" + fileName;
+		
+		File ff = new File(filePath);
+		if(ff.createNewFile() && !ff.isDirectory()) {
+			System.out.println("File " + ff.getName() + " created.");
+		}else {
+			System.out.println("File " + ff.getName() + " already exists.");
+		}
+	}
+	
+	private void deleteFile(File fileDirectory) {
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Please enter the file name you want to delete:");
+		String fileName = sc.next();
+		String filePath = fileDirectory + "/" + fileName;
+		
+		File ff = new File(filePath);
+		if (ff.exists()) {
+			System.out.println(ff.getName() + " file deleted.");
+			ff.delete();
+		} else {
+			System.out.println("File not found");
+		}
+	}
+	
+	private void searchFile(File fileDirectory) {
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Please enter the file name you want to retrieve:");
+		String fileName = sc.next();
+		String fileNames[]=fileDirectory.list();
+		List<String> fileNamesList = Arrays.asList(fileNames);
+		
+		if (fileNamesList.contains(fileName)) {
+			System.out.println("The file " + fileName + " exists!");
+		} else {
+			System.out.println("The file " + fileName +" does not exists.");
+		}
+	}
+	
+	private static final ArrayList<String> CREATE_MAIN_MENU_LIST() {
+		ArrayList<String> mainMenu = new ArrayList<>();
+		mainMenu.add("1. Show Files in ascending order");
+		mainMenu.add("2. Show File Options Menu");
+		mainMenu.add("3. Exit");
+		
+		return(mainMenu);
+	}
+	
+	private static final ArrayList<String> CREATE_OPTION_MENU_LIST() {
+		ArrayList<String> optionMenu = new ArrayList<>();
+		optionMenu.add("1. Add a new file");
+		optionMenu.add("2. Delete a file");
+		optionMenu.add("3. Search file");
+		optionMenu.add("4. Back to Main menu");
+		
+		return(optionMenu);
+	}	
+}

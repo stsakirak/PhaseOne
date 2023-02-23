@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy 11 elements to &apos;VirtualKeyProject/src&apos;&#x0A;- Original project: &apos;IOPackage&apos;&#x0A;- Destination element: &apos;VirtualKeyProject/src&apos;&#x0A;- Original elements:&#x0A;     d.txt&#x0A;     ababab.txt&#x0A;     c.txt&#x0A;     info.txt&#x0A;     m&#x0A;     xyz.txt&#x0A;     abc.txt&#x0A;     abab.txt&#x0A;     abababe.txt&#x0A;     emp.txt&#x0A;     employee.txt" description="Copy files" destination="=VirtualKeyProject/src" element1="d.txt" element10="emp.txt" element11="employee.txt" element2="ababab.txt" element3="c.txt" element4="info.txt" element5="m" element6="xyz.txt" element7="abc.txt" element8="abab.txt" element9="abababe.txt" files="11" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1675069721927" units="0" version="1.0"/>
+</session>

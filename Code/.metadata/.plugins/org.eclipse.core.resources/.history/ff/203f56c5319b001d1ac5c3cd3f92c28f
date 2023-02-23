@@ -1,0 +1,49 @@
+package com;
+
+import java.io.DataInputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+
+public class WelcomeScreen {
+	
+	private static final String APPLICATION_NAME_TEXT = "Welcome to Virtual Key!";
+	private static final String DEVELOPER_NAME_TEXT = "Developer: Thomas Georgakis";
+	private static final String MAIN_MENU_TEXT = "Main menu";
+	private ArrayList<String> mainMenu = new ArrayList<>();
+	
+	
+	void displayWS () {
+		System.out.println(APPLICATION_NAME_TEXT);
+		System.out.println(DEVELOPER_NAME_TEXT);
+		System.out.println("\n");
+		System.out.println(MAIN_MENU_TEXT);
+		
+		mainMenu.add("1. Show Files");
+		mainMenu.add("2. Show File Options Menu");
+		mainMenu.add("3. Exit");
+		
+		for(String s : mainMenu) {
+			System.out.println(s);
+		}
+		
+
+		String mainMenuInput;
+		try {
+			do {
+				DataInputStream dis = new DataInputStream(System.in);
+				mainMenuInput = dis.readLine();
+				
+				switch (mainMenuInput) {
+					case "1": System.out.println("Deixnw ta arxeia se ascending order");
+					case "2": System.out.println("Deixnw to menu me ta options");
+					case "3": System.out.println("felakia!");
+					default: System.out.println("Please give a number between 1-3"); break;
+				}
+
+			} while ((Integer.parseInt(mainMenuInput) < 1) || (Integer.parseInt(mainMenuInput) > 3));
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+}

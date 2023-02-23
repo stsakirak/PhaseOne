@@ -1,0 +1,14 @@
+package com;
+
+import java.io.File;
+
+public interface IFileOperations {
+	
+	void sortFileNameList(File fileDirectory);
+	
+	void addNewFile(File fileDirectory);
+	
+	void deleteFile(File fileDirectory);
+	
+	void searchFile(File fileDirectory);
+}

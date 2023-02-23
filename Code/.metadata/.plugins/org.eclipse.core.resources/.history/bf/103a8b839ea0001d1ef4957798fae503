@@ -1,0 +1,163 @@
+package com;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class WelcomeScreen {
+	
+	private static final String APPLICATION_NAME_TEXT = "Welcome to Virtual Key!";
+	private static final String DEVELOPER_NAME_TEXT = "Developer: Thomas Georgakis";
+	private static final String MAIN_MENU_TEXT = "Main menu";
+	private static final String OPTION_MENU_TEXT = "Option menu.";
+	private ArrayList<String> mainMenu = new ArrayList<>();
+	private ArrayList<String> optionMenu = new ArrayList<>();
+	private File fileDirectory = new File("/home/thomasgeorgakis/Desktop/Java FSD Fullstack/Phase 1/Code/VirtualKeyProject/src/");
+	
+	void displayWS () throws IOException {
+		String mainMenuInput;
+		mainMenu.add("1. Show Files");
+		mainMenu.add("2. Show File Options Menu");
+		mainMenu.add("3. Exit");
+		
+		System.out.println(APPLICATION_NAME_TEXT);
+		System.out.println(DEVELOPER_NAME_TEXT);
+		System.out.println("\n");
+		
+		mainMenuSelection();
+	}
+
+	private void mainMenuSelection() throws IOException {
+		String mainMenuInput;
+		do {
+			System.out.println(MAIN_MENU_TEXT);
+			System.out.println("Please choose a number between 1-3");
+			for(String s : mainMenu) {
+				System.out.println(s);
+			}
+			
+			Scanner sc = new Scanner(System.in);
+			mainMenuInput = sc.next();
+			
+			switch (mainMenuInput) {
+				case "1": 
+					sortFileNameList(fileDirectory);
+					break;
+				case "2": 
+					displayOptionMenu();
+					break;
+				case "3": 
+					System.out.println("Exit");
+					break;
+				default: 
+					System.out.println("Please give a number between 1-3");
+					break;
+			}
+
+		} while ((Integer.parseInt(mainMenuInput) < 1) || (Integer.parseInt(mainMenuInput) > 3));
+	}
+	
+	private void displayOptionMenu()  throws IOException {
+		
+		optionMenu.add("1. Add a new file");
+		optionMenu.add("2. Delete a file");
+		optionMenu.add("3. Search file");
+		optionMenu.add("4. Back to Main menu");
+		
+		optionMenuSelection();
+	}
+
+	private void optionMenuSelection() throws IOException {
+		String optionMenuInput;
+		do {
+			System.out.println(OPTION_MENU_TEXT);
+			System.out.println("Please choose a number between 1-4");
+			for(String s : optionMenu) {
+				System.out.println(s);
+			}
+			Scanner sc = new Scanner(System.in);
+			optionMenuInput = sc.next();
+			
+			switch (optionMenuInput) {
+				case "1": 
+					addNewFile(fileDirectory);
+					break;
+				case "2": 
+					deleteFile(fileDirectory);
+					break;
+				case "3":
+					searchFile(fileDirectory);
+					break;
+				case "4":
+					mainMenuSelection();
+					break;
+				default: 
+					System.out.println("Please give a number between 1-4");
+					break;
+			}
+		} while ((Integer.parseInt(optionMenuInput) < 1) || (Integer.parseInt(optionMenuInput) > 4));
+	}
+
+	private void sortFileNameList(File fileDirectory) {
+		
+		String fileNames[]=fileDirectory.list();
+		for (int i = 0;i<fileNames.length - 1;i++) {
+			for(int j=i+1;j<fileNames.length;j++) {
+				if (fileNames[i].compareTo(fileNames[j]) > 0) {
+					String temp = fileNames[i];
+					fileNames[i] = fileNames[j];
+					fileNames[j] = temp;
+				}
+			}
+		}
+		System.out.println(Arrays.toString(fileNames));
+	}
+	
+	private void addNewFile(File fileDirectory) throws IOException {
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Please enter the file name you want to create:");
+		String fileName = sc.next();
+		String filePath = fileDirectory + "/" + fileName;
+		
+		File ff = new File(filePath);
+		if(ff.createNewFile() && !ff.isDirectory()) {
+			System.out.println("File " + ff.getName() + " created.");
+		}else {
+			System.out.println("File " + ff.getName() + " already exists.");
+		}
+		sc.close();
+	}
+	
+	private void deleteFile(File fileDirectory) {
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Please enter the file name you want to delete:");
+		String fileName = sc.next();
+		String filePath = fileDirectory + "/" + fileName;
+		
+		File ff = new File(filePath);
+		if (ff.exists()) {
+			System.out.println(ff.getName() + " file deleted.");
+			ff.delete();
+		} else {
+			System.out.println("File not found");
+		}
+	}
+	
+	private void searchFile(File fileDirectory) {
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Please enter the file name you want to retrieve:");
+		String fileName = sc.next();
+		String fileNames[]=fileDirectory.list();
+		
+		for (int i=0 ; i<fileNames.length; i++) {
+			if (fileName.equals(fileNames[i])) {
+				System.out.println("The file " + fileName + " exists!");
+			} else {
+				System.out.println("The file " + fileName +" does not exists.");
+			}
+		}
+	}
+	
+}
